@@ -15,7 +15,7 @@ def get_places_from_city(city_id):
     if storage.get(City, city_id) is None:
         abort(404)
     return (jsonify(([place.to_dict() for place in storage.all(Place).
-                      values()if place.city_id == city_id])))
+                      values()if place.city_id == str(city_id)])))
 
 
 @app_views.route("/places/<city_id>", methods=["GET"], strict_slashes=False)
