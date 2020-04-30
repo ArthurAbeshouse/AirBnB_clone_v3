@@ -61,7 +61,7 @@ def post_review(place_id):
 
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"])
-def update_review(place_id):
+def update_review(review_id):
     """Updates a review object"""
     ignore_data = ["id", "user_id", "city_id", "created_at", "updated_at"]
     data = request.get_json()
