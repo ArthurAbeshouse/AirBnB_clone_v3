@@ -79,14 +79,17 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        self.assertTrue(True)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        self.assertTrue(True)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        self.assertTrue(True)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
@@ -110,7 +113,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(no_state, None)
         models.storage.delete(state_test)
         models.storage.delete(user_test)
-        storage.close()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
@@ -124,4 +126,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.count(City), int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
         self.assertEqual(models.storage.count(City), 1)
-        storage.close()
