@@ -117,9 +117,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Tests the get method"""
-        fstore = FileStorage()
         state_test = State(name="Connecticut")
-        fstore.new(state_test)
+        state_test.save()
         f_state_id = list(models.storage.all(State).values())[0].id
         self.assertNotEqual(models.storage.get(State, f_state_id), 0, "obj")
         self.assertEqual(type(models.storage.get(State, f_state_id)), State)
@@ -129,7 +128,8 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Tests the count method"""
         models.storage.reload()
-        count = models.storage.count(State)
-        state_test = State(name="California")
-        state_test.save()
-        self.assertEqual(models.storage.count(State), count + 1)
+        count = models.storage.count()
+        count2 = models.storage.count(State)
+        self.assertIsInstance(count, int)
+        self.assertIsInstance(count2, int)
+        self.assertEqual(count, models.storage.count(None))

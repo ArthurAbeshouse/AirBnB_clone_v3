@@ -94,7 +94,7 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(state_test)
         state_test.save()
         f_state_id = list(models.storage.all(State).values())[0].id
-        self.assertNotEqual(models.storage.get(State, f_state_id), 0, "obj")
+        self.assertNotEqual(models.storage.get(State, f_state_id), 0)
         self.assertEqual(type(models.storage.get(State, f_state_id)), State)
         self.assertEqual(None, models.storage.get(State, "no_id"))
 
@@ -103,6 +103,7 @@ class TestFileStorage(unittest.TestCase):
         """Tests the count method"""
         models.storage.reload()
         count = models.storage.count()
-        state_test = State(name="California")
-        state_test.save()
-        self.assertEqual(count + 1, models.storage.count())
+        count2 = models.storage.count(State)
+        self.assertIsInstance(count, int)
+        self.assertIsInstance(count2, int)
+        self.assertEqual(count, models.storage.count(None))
