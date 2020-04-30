@@ -119,3 +119,4 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.count(City), int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
         self.assertEqual(models.storage.count(City), 1)
+        self.assertEqual(len(storage.all(State)), storage.count(State))
