@@ -131,7 +131,6 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Tests the count method"""
         count = models.storage.count(State)
-        self.assertEqual(models.storage.count(State), count + 1)
         self.assertIsInstance(models.storage.count(), int)
         self.assertIsInstance(count, int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
