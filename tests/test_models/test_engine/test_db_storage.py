@@ -142,4 +142,5 @@ class TestFileStorage(unittest.TestCase):
         storage.delete(new_state)
         storage.save()
         self.assertTrue(storage.count() == older_storage)
+        models.storage.close()
         storage.close
