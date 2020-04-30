@@ -83,7 +83,7 @@ class FileStorage:
         """counts the number of objects in storage"""
         obj_total = 0
         if cls is not None:
-            return len(self.all())
+            return len(self.all(cls))
         else:
             obj_total = len(self.__objects)
         return obj_total
