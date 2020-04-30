@@ -6,7 +6,6 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
-from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -95,12 +94,16 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Tests the get method"""
         state_test = State(**{"name": "Connecticut"})
-        storage.new(state_test)
+        models.storage.new(state_test)
         user_test = User(email="y@u.com", password="456")
-        storage.new(user_test)
-        storage.save()
+        models.storage.new(user_test)
+        models.storage.save()
         no_state = models.storage.get(State, "What is this?")
-        f_state_id = list(models.storage.all(State).values())[0].id
+        states_list = []
+        for state in models.storage.all(State).values():
+            states_list.append(state)
+            break
+        f_state_id = states_list[0].id
         self.assertNotEqual(models.storage.get(State, f_state_id), 0, "obj")
         self.assertEqual(type(models.storage.get(State, f_state_id)), State)
         self.assertEqual(None, models.storage.get(State, "no_id"))
@@ -111,10 +114,10 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.get(State, f_state_id), State)
         self.assertIsInstance(models.storage.get(State, f_state_id).id, str)
         self.assertIs(no_state, None)
+        self.assertTrue(models.storage.count(State) > 0)
         models.storage.delete(state_test)
         models.storage.delete(user_test)
-        self.assertTrue(storage.count(State) > 0)
-        storage.close
+        models.storage.close
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
@@ -131,6 +134,12 @@ class TestFileStorage(unittest.TestCase):
         storage = models.storage
         older_storage = storage.count()
         self.assertTrue(older_storage >= 0)
-        self.assertFalse(storage.count() == older_storage + 1)
+        new_state = State()
+        new_state.name = "Vermont"
+        storage.new(new_state)
+        storage.save()
+        self.assertTrue(storage.count() == older_storage + 1)
+        storage.delete(new_state)
+        storage.save()
         self.assertTrue(storage.count() == older_storage)
         storage.close

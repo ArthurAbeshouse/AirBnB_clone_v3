@@ -6,7 +6,6 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
-from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -118,7 +117,11 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Tests the get method"""
-        f_state_id = list(models.storage.all(State).values())[0].id
+        states_list = []
+        for state in models.storage.all(State).values():
+            states_list.append(state)
+            break
+        f_state_id = states_list[0].id
         no_state = models.storage.get(State, "Whatisthis?")
         self.assertNotEqual(models.storage.get(State, f_state_id), 0)
         self.assertNotEqual(models.storage.get(State, f_state_id), None)
@@ -127,7 +130,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.get(State, f_state_id), State)
         self.assertIsInstance(models.storage.get(State, f_state_id).id, str)
         self.assertIs(no_state, None)
-        self.assertTrue(storage.count(State) > 0)
+        self.assertTrue(models.storage.count(State) > 0)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
@@ -135,7 +138,13 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         old_storage = storage.count()
         self.assertTrue(old_storage >= 0)
-        self.assertFalse(storage.count() == old_storage + 1)
+        new_state = State()
+        new_state.name = "Vermont"
+        storage.new(new_state)
+        storage.save()
+        self.assertTrue(storage.count() == old_storage + 1)
+        storage.delete(new_state)
+        storage.save()
         self.assertTrue(storage.count() == old_storage)
         self.assertIsInstance(models.storage.count(), int)
         self.assertIsInstance(models.storage.count(State), int)
