@@ -135,7 +135,7 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         old_storage = storage.count()
         self.assertTrue(old_storage >= 0)
-        self.assertTrue(storage.count() == old_storage + 1)
+        self.assertFalse(storage.count() == old_storage + 1)
         self.assertTrue(storage.count() == old_storage)
         self.assertIsInstance(models.storage.count(), int)
         self.assertIsInstance(models.storage.count(State), int)
