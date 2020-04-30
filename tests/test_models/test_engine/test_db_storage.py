@@ -92,7 +92,8 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Tests the get method"""
         state_test = State(**{"name": "Connecticut"})
-        state_test.save()
+        storage.new(state_test)
+        storage.save()
         no_state = models.storage.get(State, "What is this?")
         f_state_id = list(models.storage.all(State).values())[0].id
         self.assertNotEqual(models.storage.get(State, f_state_id), 0, "obj")
@@ -111,9 +112,10 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Tests the count method"""
         state_test = State(**{"name": "California"})
-        state_test.save()
+        storage.new(state_test)
         city_test = City(**{"state_id": state_test.id, "name": "California"})
-        city_test.save()
+        storage.new(city_test)
+        storage.save()
         self.assertIsInstance(models.storage.count(), int)
         self.assertIsInstance(models.storage.count(City), int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
