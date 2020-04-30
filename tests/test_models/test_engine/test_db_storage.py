@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -99,6 +100,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(None, models.storage.get(State, "no_id"))
         self.assertNotEqual(models.storage.get(State, f_state_id), 0)
         self.assertNotEqual(models.storage.get(State, f_state_id), None)
+        self.assertNotEqual(storage.get(State, f_state_id).id, state_test.id)
         self.assertNotEqual(models.storage.get(State, f_state_id), no_state)
         self.assertEqual(no_state, None)
         self.assertIsInstance(models.storage.get(State, f_state_id), State)
