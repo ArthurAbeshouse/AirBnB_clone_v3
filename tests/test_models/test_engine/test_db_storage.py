@@ -96,7 +96,7 @@ class TestFileStorage(unittest.TestCase):
         user_test = User(email="y@u.com", password="456")
         storage.new(user_test)
         storage.save()
-        no_state = models.storage.get(State, "What is this?")
+        no_state = models.storage.get(State, "Whatisthis?")
         f_state_id = list(models.storage.all(State).values())[0].id
         self.assertNotEqual(models.storage.get(State, f_state_id), 0, "obj")
         self.assertEqual(type(models.storage.get(State, f_state_id)), State)
@@ -123,4 +123,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.count(City), int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
         self.assertEqual(models.storage.count(City), 1)
-        self.assertEqual(len(storage.all(State)), storage.count(State))
