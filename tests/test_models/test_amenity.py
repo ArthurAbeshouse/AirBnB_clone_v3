@@ -80,6 +80,7 @@ class TestAmenity(unittest.TestCase):
         """test to_dict method creates a dictionary with proper attrs"""
         am = Amenity()
         new_d = am.to_dict()
+        print(am.__dict__)
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in am.__dict__:
