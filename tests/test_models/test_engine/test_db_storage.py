@@ -113,16 +113,24 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(no_state, None)
         models.storage.delete(state_test)
         models.storage.delete(user_test)
+        self.assertTrue(storage.count(State) > 0)
+        storage.close
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Tests the count method"""
         state_test = State(**{"name": "California"})
-        storage.new(state_test)
+        models.storage.new(state_test)
         city_test = City(**{"state_id": state_test.id, "name": "California"})
-        storage.new(city_test)
-        storage.save()
+        models.storage.new(city_test)
+        models.storage.save()
         self.assertIsInstance(models.storage.count(), int)
         self.assertIsInstance(models.storage.count(City), int)
         self.assertEqual(models.storage.count(), models.storage.count(None))
         self.assertEqual(models.storage.count(City), 1)
+        storage = models.storage
+        older_storage = storage.count()
+        self.assertTrue(older_storage >= 0)
+        self.assertTrue(storage.count() == older_storage + 1)
+        self.assertTrue(storage.count() == older_storage)
+        storage.close
