@@ -159,7 +159,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Flavio Espinoza - [Github](https://github.com/fvesp18) / [Twitter](https://twitter.com/fvesp18)
 
-Arthur Abehouse
+Arthur Abehouse - [Github](https://github.com/ArthurAbeshouse) / [Twitter](https://twitter.com/ArthurAbeshouse)
 
 Diego Tardio
 Second part of Airbnb: Joann Vuong
