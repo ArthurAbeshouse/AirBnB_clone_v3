@@ -161,7 +161,7 @@ Flavio Espinoza - [Github](https://github.com/fvesp18) / [Twitter](https://twitt
 
 Arthur Abehouse - [Github](https://github.com/ArthurAbeshouse) / [Twitter](https://twitter.com/ArthurAbeshouse)
 
-Diego Tardio
-Second part of Airbnb: Joann Vuong
+Diego Tardio - [Github](https://github.com/747-diego) / [Twitter](https://twitter.com/cheve747)
+
 ## License
 Public Domain. No copy write protection. test
