@@ -134,6 +134,10 @@ class TestFileStorage(unittest.TestCase):
         new_state.name = "Vermont"
         storage.new(new_state)
         storage.save()
+        self.assertIsInstance(models.storage.count(), int)
+        self.assertIsInstance(models.storage.count(City), int)
+        self.assertEqual(models.storage.count(), models.storage.count(None))
+        self.assertEqual(models.storage.count(City), 1)
         self.assertTrue(storage.count() == older_storage + 1)
         storage.delete(new_state)
         storage.save()
